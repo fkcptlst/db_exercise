@@ -1,0 +1,51 @@
+-- CREATE
+--     OR REPLACE FUNCTION posts_user_banned_trigger_proc() RETURNS trigger AS
+-- $$
+-- BEGIN
+--     IF (check_banned(NEW.fieldid,NEW.owneruserid))
+--     THEN
+-- --         RAISE EXCEPTION 'User is banned';
+--         RETURN NULL;
+--     ELSE
+--         RETURN NEW;
+--     END IF;
+-- END;
+-- $$
+--     LANGUAGE plpgsql;
+--
+--
+-- -- posts_user_banned_trigger to prevent banned talking
+-- CREATE
+--     OR REPLACE TRIGGER posts_user_banned_trigger
+--     BEFORE INSERT OR
+--         UPDATE
+--     ON "StackExchange".posts
+--     FOR EACH ROW
+-- EXECUTE PROCEDURE posts_user_banned_trigger_proc();
+--
+--
+--
+-- CREATE OR REPLACE FUNCTION comments_user_banned_trigger_proc() RETURNS trigger AS
+-- $$
+-- BEGIN
+--     IF (check_banned(NEW.fieldid,NEW.userid))
+--     THEN
+--         RETURN NULL;
+--     ELSE
+--         RETURN NEW;
+--     END IF;
+-- END;
+-- $$
+--     LANGUAGE plpgsql;
+--
+--
+-- -- comments_user_banned_trigger to prevent banned talking
+-- CREATE
+--     OR REPLACE TRIGGER comments_user_banned_trigger
+--     BEFORE INSERT OR
+--         UPDATE
+--     ON "StackExchange".comments
+--     FOR EACH ROW
+-- EXECUTE PROCEDURE comments_user_banned_trigger_proc();
+--
+--
