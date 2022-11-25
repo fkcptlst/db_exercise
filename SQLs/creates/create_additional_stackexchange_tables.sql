@@ -50,3 +50,15 @@ CREATE TABLE IF NOT EXISTS post_tags
     FOREIGN KEY (FieldId, PostId) REFERENCES posts (FieldId, id) ON DELETE CASCADE,
     FOREIGN KEY (FieldId, TagId) REFERENCES tags (FieldId, id) ON DELETE CASCADE
 );
+
+-- semantic embeddings, StackExchange
+CREATE TABLE IF NOT EXISTS semantic_embeddings
+(
+    FieldId INTEGER NOT NULL,
+    PostId  INTEGER NOT NULL,
+    Embedding DOUBLE PRECISION[384] NOT NULL,
+
+    PRIMARY KEY (FieldId, PostId),
+    FOREIGN KEY (FieldId) REFERENCES "Common".fields (FieldId) ON DELETE CASCADE,
+    FOREIGN KEY (FieldId, PostId) REFERENCES posts (FieldId, id) ON DELETE CASCADE
+);
